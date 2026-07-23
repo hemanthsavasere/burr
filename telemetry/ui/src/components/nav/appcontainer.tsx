@@ -37,6 +37,7 @@ import { classNames } from '../../utils/tailwind';
 import React from 'react';
 import { DefaultService } from '../../api';
 import { useQuery } from 'react-query';
+import { ThemeToggle } from '../common/ThemeToggle';
 
 // Define your GitHub logo SVG as a React component
 const GithubLogo = () => (
@@ -45,7 +46,8 @@ const GithubLogo = () => (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 22 22"
-    stroke="currentColor">
+    stroke="currentColor"
+  >
     {/* SVG path for GitHub logo */}
     <path
       strokeLinecap="round"
@@ -64,8 +66,8 @@ const ToggleOpenButton = (props: { open: boolean; toggleSidebar: () => void }) =
   return (
     <MinimizeMaximizeIcon
       className={classNames(
-        'text-gray-400',
-        'h-8 w-8 hover:bg-gray-50 rounded-md hover:cursor-pointer'
+        'text-gray-400 dark:text-gray-500',
+        'h-8 w-8 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md hover:cursor-pointer'
       )}
       aria-hidden="true"
       onClick={props.toggleSidebar}
@@ -181,7 +183,7 @@ export const AppContainer = (props: { children: React.ReactNode }) => {
 
   return (
     <>
-      <div className="h-screen w-screen overflow-x-auto">
+      <div className="h-screen w-screen overflow-x-auto bg-white dark:bg-gray-900">
         <Transition.Root show={smallSidebarOpen} as={Fragment}>
           <Dialog as="div" className="relative z-50 lg:hidden" onClose={setSmallSidebarOpen}>
             <Transition.Child
@@ -191,7 +193,8 @@ export const AppContainer = (props: { children: React.ReactNode }) => {
               enterTo="opacity-100"
               leave="transition-opacity ease-linear duration-300"
               leaveFrom="opacity-100"
-              leaveTo="opacity-0">
+              leaveTo="opacity-0"
+            >
               <div className="fixed inset-0 bg-gray-900/80" />
             </Transition.Child>
 
@@ -203,7 +206,8 @@ export const AppContainer = (props: { children: React.ReactNode }) => {
                 enterTo="translate-x-0"
                 leave="transition ease-in-out duration-300 transform"
                 leaveFrom="translate-x-0"
-                leaveTo="-translate-x-full">
+                leaveTo="-translate-x-full"
+              >
                 <Dialog.Panel className="relative mr-16 flex w-full max-w-xs flex-1">
                   <Transition.Child
                     as={Fragment}
@@ -212,19 +216,21 @@ export const AppContainer = (props: { children: React.ReactNode }) => {
                     enterTo="opacity-100"
                     leave="ease-in-out duration-300"
                     leaveFrom="opacity-100"
-                    leaveTo="opacity-0">
+                    leaveTo="opacity-0"
+                  >
                     <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
                       <button
                         type="button"
                         className="-m-2.5 p-2.5"
-                        onClick={() => setSmallSidebarOpen(false)}>
+                        onClick={() => setSmallSidebarOpen(false)}
+                      >
                         <span className="sr-only">Close sidebar</span>
                         <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
                       </button>
                     </div>
                   </Transition.Child>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2 py-2">
+                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2 py-2 dark:bg-gray-900">
                     <div className="flex h-16 shrink-0 items-center">
                       <img
                         className="h-10 w-auto"
@@ -249,7 +255,8 @@ export const AppContainer = (props: { children: React.ReactNode }) => {
                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                   )}
                                   target={item.linkType === 'external' ? '_blank' : undefined}
-                                  rel={item.linkType === 'external' ? 'noreferrer' : undefined}>
+                                  rel={item.linkType === 'external' ? 'noreferrer' : undefined}
+                                >
                                   <item.icon
                                     className={classNames(
                                       isCurrent(item.href, item.linkType)
@@ -278,9 +285,10 @@ export const AppContainer = (props: { children: React.ReactNode }) => {
         <div
           className={`hidden ${
             sidebarOpen ? 'h-screen lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col' : ''
-          }`}>
+          }`}
+        >
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 py-2">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 py-2 dark:border-gray-700 dark:bg-gray-900">
             <div className="flex h-16 shrink-0 items-center">
               <img
                 className="h-12 w-auto"
@@ -299,14 +307,15 @@ export const AppContainer = (props: { children: React.ReactNode }) => {
                             to={item.href}
                             className={classNames(
                               isCurrent(item.href, item.linkType)
-                                ? 'bg-gray-50'
-                                : 'hover:bg-gray-50',
-                              'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700'
+                                ? 'bg-gray-50 dark:bg-gray-800'
+                                : 'hover:bg-gray-50 dark:hover:bg-gray-800',
+                              'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 dark:text-gray-200'
                             )}
                             target={item.linkType === 'external' ? '_blank' : undefined}
-                            rel={item.linkType === 'external' ? 'noreferrer' : undefined}>
+                            rel={item.linkType === 'external' ? 'noreferrer' : undefined}
+                          >
                             <item.icon
-                              className="h-6 w-6 shrink-0 text-gray-400"
+                              className="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-500"
                               aria-hidden="true"
                             />
                             {item.name}
@@ -318,12 +327,14 @@ export const AppContainer = (props: { children: React.ReactNode }) => {
                                 <Disclosure.Button
                                   className={classNames(
                                     isCurrent(item.href, item.linkType)
-                                      ? 'bg-gray-50'
-                                      : 'hover:bg-gray-50',
-                                    'flex items-center w-full text-left rounded-md p-2 gap-x-3 text-sm leading-6 font-semibold text-gray-700'
-                                  )}>
+                                      ? 'bg-gray-50 dark:bg-gray-800'
+                                      : 'hover:bg-gray-50 dark:hover:bg-gray-800',
+                                    'flex items-center w-full text-left rounded-md p-2 gap-x-3 text-sm leading-6 font-semibold text-gray-700 dark:text-gray-200'
+                                  )}
+                                >
+
                                   <item.icon
-                                    className="h-6 w-6 shrink-0 text-gray-400"
+                                    className="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-500"
                                     aria-hidden="true"
                                   />
                                   {item.name}
@@ -342,16 +353,17 @@ export const AppContainer = (props: { children: React.ReactNode }) => {
                                         to={subItem.href}
                                         className={classNames(
                                           isCurrent(subItem.href, subItem.linkType)
-                                            ? 'bg-gray-50'
-                                            : 'hover:bg-gray-50',
-                                          'block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700'
+                                            ? 'bg-gray-50 dark:bg-gray-800'
+                                            : 'hover:bg-gray-50 dark:hover:bg-gray-800',
+                                          'block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700 dark:text-gray-300'
                                         )}
                                         target={
                                           subItem.linkType === 'external' ? '_blank' : undefined
                                         }
                                         rel={
                                           subItem.linkType === 'external' ? 'noreferrer' : undefined
-                                        }>
+                                        }
+                                      >
                                         {subItem.name}
                                       </Link>
                                     </li>
@@ -367,7 +379,8 @@ export const AppContainer = (props: { children: React.ReactNode }) => {
                 </li>
               </ul>
             </nav>
-            <div className="flex justify-start -mx-5">
+            <div className="flex justify-between items-center -mx-5 px-5">
+              <ThemeToggle />
               <ToggleOpenButton open={sidebarOpen} toggleSidebar={toggleSidebar} />
             </div>
           </div>
@@ -377,7 +390,8 @@ export const AppContainer = (props: { children: React.ReactNode }) => {
             !sidebarOpen
               ? 'lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-8 lg:flex-col justify-end lg:py-2 lg:px-1'
               : ''
-          }`}>
+          }`}
+        >
           <ToggleOpenButton open={sidebarOpen} toggleSidebar={toggleSidebar} />
         </div>
 
